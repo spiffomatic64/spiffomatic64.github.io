@@ -1,311 +1,4835 @@
-#! python3
 
-import requests
-import json
-import urllib
-import zipfile
-import sqlite3
-import glob
-import os
-import platform
-import time
-from jsondiff import diff
-       
-bucket_types = { 2422292810 : "Engram",
-2465295065 : "Energy Weapons",
-2689798304 : "Upgrade Point",
-2689798305 : "Strange Coin",
-2689798308 : "Glimmer",
-2689798309 : "Legendary Shards",
-2689798310 : "Silver",
-2689798311 : "Bright Dust",
-2973005342 : "Shaders",
-3054419239 : "Emotes",
-3161908920 : "Messages",
-3284755031 : "Subclass",
-3313201758 : "Modifications",
-3448274439 : "Helmet",
-3551918588 : "Gauntlets",
-3621873013 : "Classification",
-3796357825 : "3796357825",
-3865314626 : "Materials",
-4023194814 : "Ghost",
-4274335291 : "Emblems",
-4292445962 : "Clan Banners",
-14239492 : "Chest Armor",
-18606351 : "Shaders",
-20886954 : "Leg Armor",
-138197802 : "General",
-215593132 : "Lost Items",
-284967655 : "Ships",
-375726501 : "Engrams",
-444348033 : "444348033",
-497170007 : "497170007",
-953998645 : "Power Weapons",
-1269569095 : "Auras",
-1367666825 : "Special Orders",
-1469714392 : "Consumables",
-1498876634 : "Kinetic Weapons",
-1585787867 : "Class Armor",
-1626737477 : "1626737477",
-1801258597 : "Bounty",
-2025709351 : "Vehicle" }
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>New CoO stuff</title>
 
-def db_read(input_file):
-    con = sqlite3.connect(input_file)
-    cursor = con.cursor()
-    cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
-    tables = cursor.fetchall()
-    
-    stuff = {}
-    
-    for table in tables:
-        #print(table[0])
-        
-        cursor.execute("SELECT * FROM %s;" % table[0])
-        rows = cursor.fetchall()
-        num = len(rows)
-        
-        for i in range(num):
-            a = json.loads(rows[i][1])
-            
-            if "displayProperties" in a and "hash" in a:
-                name = ""
-                if "name" in a["displayProperties"]:
-                    if len(a["displayProperties"]["name"])>0:
-                        name = a["displayProperties"]["name"]
-                
-                description = ""
-                if "description" in a["displayProperties"]:
-                    if len(a["displayProperties"]["description"])>0:
-                        description = a["displayProperties"]["description"]
-                        
-                icon = ""
-                if "icon" in a["displayProperties"]:
-                    if len(a["displayProperties"]["icon"])>0:
-                        icon = a["displayProperties"]["icon"]
-                        
-                itemTypeDisplayName = ""
-                if "itemTypeDisplayName" in a:
-                    if len(a["itemTypeDisplayName"])>0:
-                        itemTypeDisplayName = a["itemTypeDisplayName"]
-                        
-                tooltipStyle = ""
-                if "tooltipStyle" in a:
-                    if len(a["tooltipStyle"])>0:
-                        tooltipStyle = a["tooltipStyle"]
-                        
-                bucketTypeHash = ""
-                tierTypeName = ""
-                
-                if "inventory" in a:
-                    if "bucketTypeHash" in a["inventory"]:
-                        if a["inventory"]["bucketTypeHash"]>0:
-                            bucketTypeHash = bucket_types[a["inventory"]["bucketTypeHash"]]
-                    if "tierTypeName" in a["inventory"]:
-                        if len(a["inventory"]["tierTypeName"])>0:
-                            tierTypeName = a["inventory"]["tierTypeName"]
-                        
-                stuff[a["hash"]] = [name, description, icon, itemTypeDisplayName, tooltipStyle, bucketTypeHash, tierTypeName, table]
-            
-    return stuff
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.css" rel="stylesheet">
+    <link href="https://drvic10k.github.io/bootstrap-sortable/Contents/bootstrap-sortable.css" rel="stylesheet">
 
-old_items = db_read("world_sql_content_5b6870694dc15572dc92beb29a1693d2.content")
-new_items = db_read("world_sql_content_4715157a8d3e073dccce96c62e065c67.content")
+</head>
 
-removed_items = {}
-changed = {}
+<body bgcolor="lightgrey">
+<h1>New</h1>
+<table class="table table-bordered table-striped sortable">
+<thead>
+ <tr>
+     <th>Hash</th>
+     <th>Name</th>
+     <th>Description</th>
+     <th>bucketTypeHash</th>
+     <th>tierTypeName</th>
+ </tr>
+</thead>
+<tbody> 
+ <tr>
+  <td>
+   2157694759
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Bounty
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2162824284
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2168140710
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2169736092
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Bounty
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2224123579
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ghost
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2248837196
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Bounty
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2287012504
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Bounty
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2294092935
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Bounty
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2296243897
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Bounty
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2340300214
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Classification
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2359429886
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Bounty
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2360690104
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2374036586
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2378467684
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Bounty
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2383960413
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Consumables
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2412585884
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2463984038
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ghost
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2467293104
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Classification
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2485376619
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2494969817
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Classification
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2499409254
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Classification
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2508868337
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ghost
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2535989027
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2538439951
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Gauntlets
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2549404869
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ghost
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2593080269
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Emotes
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2600906801
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engrams
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2607476204
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Modifications
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2607476205
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Modifications
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2607476206
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Modifications
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2607476207
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Modifications
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2623660327
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Shaders
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2653453774
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engrams
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2661272172
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Class Armor
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2661272173
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Class Armor
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2671544961
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2690615084
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2690615086
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2690615087
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2729305926
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Class Armor
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2731424153
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2743037594
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Bounty
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2773612717
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ghost
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2779841496
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Modifications
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2779841497
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Modifications
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2779841499
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Modifications
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2779841502
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Modifications
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2802980754
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2807781581
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Classification
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2885044740
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Bounty
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2890083513
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ghost
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2919298429
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ghost
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2975594588
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engrams
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2987465391
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Classification
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2998296658
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Modifications
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3000903801
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engrams
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3015667944
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Bounty
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3018123692
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Bounty
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3022817118
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3023230941
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Modifications
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3058308164
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Bounty
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3103393814
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3105953706
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Vehicle
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3105953707
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Vehicle
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3127037131
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3140833552
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ships
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3140833553
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ships
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3140833554
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ships
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3140833555
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ships
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3140833556
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ships
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3140833557
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ships
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3140833558
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ships
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3140833559
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ships
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3154516913
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Leg Armor
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3161524490
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Vehicle
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3168164098
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Modifications
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3177119978
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ships
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3194255107
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3228456715
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Classification
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3245803773
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Classification
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3248215413
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Bounty
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3287805174
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ghost
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3287805175
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ghost
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3287805176
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ghost
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3287805177
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ghost
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3287805178
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ghost
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3287805179
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ghost
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3287805180
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ghost
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3287805181
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ghost
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3287805183
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ghost
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3305171798
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ghost
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3306267716
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Chest Armor
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3309556272
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Chest Armor
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3358532450
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ghost
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3368376909
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3423221701
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ghost
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3442166510
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Bounty
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3449949721
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Classification
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3539260224
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Consumables
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3539260225
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Consumables
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3539260227
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Consumables
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3554553057
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3569791559
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Vehicle
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3576378810
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Bounty
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3587167050
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Vehicle
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3587167051
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Vehicle
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3608787412
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Bounty
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3632424415
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Classification
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3635117993
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engrams
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3636181723
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Consumables
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3639894194
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Emblems
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3639925183
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Classification
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3662832990
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Bounty
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3673633528
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ghost
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3688853099
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3692657070
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3711090843
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Consumables
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3714667144
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Shaders
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3729709035
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ships
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3734501342
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Helmet
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3741470853
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ghost
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3763419925
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ghost
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3773368881
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3781601628
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Bounty
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3795244384
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3800267412
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Shaders
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3800267413
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Shaders
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3800267414
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Shaders
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3800267415
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Shaders
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3802876271
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Emotes
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3842267830
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Consumables
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3843317553
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3866715933
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Shaders
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3909352274
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Leg Armor
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3921006357
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Shaders
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3947596543
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Modifications
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3956230125
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Helmet
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3959756912
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Bounty
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3992348468
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Bounty
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   4020425992
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   4022014174
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   4036178150
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Leg Armor
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   4132147346
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Emblems
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   4132147347
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Emblems
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   4132147350
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Emblems
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   4164424444
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engrams
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   4171534332
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ghost
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   4190156348
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   4192847606
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   4203034886
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Power Weapons
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   4242881841
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   4294815917
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   60553218
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Classification
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   63024229
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Vehicle
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   87782468
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Bounty
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   130823332
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Bounty
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   146432385
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   158818624
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Bounty
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   163476113
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ghost
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   167651268
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Shaders
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   186342757
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   200707795
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   215596672
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Emotes
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   221164696
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Class Armor
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   221164697
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Class Armor
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   234374949
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   237827170
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Bounty
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   263371512
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ghost
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   263371513
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ghost
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   263371514
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ghost
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   263371515
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ghost
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   263371516
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ghost
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   263371517
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ghost
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   263371518
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ghost
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   263371519
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ghost
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   269339124
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Shaders
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   270671209
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Chest Armor
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   282452962
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Classification
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   316740353
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Helmet
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   317465074
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ships
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   317465075
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ships
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   345644619
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ghost
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   358639470
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   376092836
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Bounty
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   420195688
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ghost
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   473440473
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   493691702
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   518566750
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Emotes
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   576420065
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   599687980
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Modifications
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   626649506
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Emblems
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   667082542
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   691278431
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   691914261
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Modifications
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   779962716
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Gauntlets
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   780760217
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   806021398
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Kinetic Weapons
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   829949987
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Classification
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   837266425
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ghost
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   889413643
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Emotes
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   941785986
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   974968653
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   998352072
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1019874420
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1022251993
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1030990989
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Consumables
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1031690767
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Bounty
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1032710176
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1051903593
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ghost
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1052553862
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Shaders
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1052553863
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Shaders
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1104929371
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1140688064
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Bounty
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1142498290
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Emotes
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1143596739
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1154659864
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Gauntlets
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1160696798
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ghost
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1160722701
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ghost
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1174589504
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ghost
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1193934646
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Bounty
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1214025926
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1231347313
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ghost
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1247444892
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Bounty
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1301869426
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Classification
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1326366123
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Bounty
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1334842411
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Emotes
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1385663962
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Classification
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1397284432
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ghost
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1423305584
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Vehicle
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1423305585
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Vehicle
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1423305586
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Vehicle
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1423305587
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Vehicle
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1423305588
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Vehicle
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1423305589
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Vehicle
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1423305590
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Vehicle
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1423305591
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Vehicle
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1423305598
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Vehicle
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1423305599
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Vehicle
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1433198240
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1460872673
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Bounty
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1483798122
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Bounty
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1504041929
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Class Armor
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1504534396
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Classification
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1568984880
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Bounty
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1584837156
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Class Armor
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1584837157
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Class Armor
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1602334068
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ships
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1605596084
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Emotes
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1606475436
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Bounty
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1623653768
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Vehicle
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1623653769
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Vehicle
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1623653770
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Vehicle
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1623653771
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Vehicle
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1716988729
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ghost
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1732717825
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Bounty
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1736204665
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1772662751
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Bounty
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1782320603
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Emblems
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1809381923
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Class Armor
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1814780188
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ghost
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1816495538
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ghost
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1816867457
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Bounty
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1823465090
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Bounty
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1844125034
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Shaders
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1849966024
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Bounty
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1873273984
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Emotes
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1887417927
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Bounty
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1913940603
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Bounty
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1940590820
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Emblems
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1940590823
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Emblems
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1940590824
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Emblems
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1940590825
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Emblems
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1958840914
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Bounty
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1974750772
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Bounty
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   1984190529
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Vehicle
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2004923858
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Bounty
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2007408845
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2016631002
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Ghost
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2017104093
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Bounty
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2072148145
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Consumables
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2089107509
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Engram
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2112889975
+  </td>
+  <td>
+   Classified
+  </td>
+  <td>
+   Keep it secret.  Keep it safe.
+  </td>
+  <td>
+   Shaders
+  </td>
+  <td>
+   
+  </td>
+ </tr>
+     </tbody>
+</table>
 
-for item in old_items:
-    if item in new_items:
-        if old_items[item][0] != new_items[item][0] or old_items[item][1] != new_items[item][1]:
-            changed[item] = []
-            changed[item].append("%s - %s" % (old_items[item][0],new_items[item][0]))
-            changed[item].append("%s - %s" % (old_items[item][1],new_items[item][1]))
-            changed[item].append(new_items[item][2])
-            changed[item].append("%s - %s" % (old_items[item][3],new_items[item][3]))
-            changed[item].append("%s - %s" % (old_items[item][4],new_items[item][4]))
-            changed[item].append("%s" % (new_items[item][7]))
-        del new_items[item]
-    else:
-        removed_items[item] = old_items[item]
-        
-print('<html>')
-print('<head>')
-print('    <meta http-equiv="X-UA-Compatible" content="IE=edge">')
-print('    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">')
-print('    <meta name="viewport" content="width=device-width, initial-scale=1">')
-print('    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->')
-print('    <title>New CoO stuff</title>')
-print('')
-print('    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">')
-print('    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.css" rel="stylesheet">')
-print('    <link href="https://drvic10k.github.io/bootstrap-sortable/Contents/bootstrap-sortable.css" rel="stylesheet">')
-print('')
-print('</head>')
-print('')
-print('<body bgcolor="lightgrey">')
-print('<h1>New Stuff</h1>')
-print('<table class="table table-bordered table-striped sortable">')
-print('<thead>')
-print(' <tr>')
-print('     <th>Hash</th>')
-print('     <th>Table</th>')
-print('     <th>Name</th>')
-print('     <th>Description</th>')
-print('     <th>Type</th>')
-print('     <th>ToolTipStyle</th>')
-print('     <th>Icon</th>')
-print(' </tr>')
-print('</thead>')
-print('<tbody> ')
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://drvic10k.github.io/bootstrap-sortable/Scripts/bootstrap-sortable.js"></script>
 
-for item in new_items:
-    print(" <tr>")
-    print("  <td>")
-    print("   %s" % item)
-    print("  </td>")
-    
-    print("  <td>")
-    print("   %s" % new_items[item][7])
-    print("  </td>")
-    
-    print("  <td>")
-    print("   %s" % new_items[item][0])
-    print("  </td>")
-    
-    print("  <td>")
-    print("   %s" % new_items[item][1])
-    print("  </td>")
-    
-    print("  <td>")
-    print("   %s" % new_items[item][3])
-    print("  </td>")
-    
-    print("  <td>")
-    print("   %s" % new_items[item][4])
-    print("  </td>")
-    
-    print("  <td>")
-    if new_items[item][2] != "":
-        print("   <img src=\"https://bungie.net%s\">" % new_items[item][2])
-    print("  </td>")
-    
-    print(" </tr>")
-    
-print('     </tbody>')
-print('</table>')
 
-print('<h1>Changed Stuff</h1>')
-print('<table class="table table-bordered table-striped sortable">')
-print('<thead>')
-print(' <tr>')
-print('     <th>Hash</th>')
-print('     <th>Table</th>')
-print('     <th>Name</th>')
-print('     <th>Description</th>')
-print('     <th>Type</th>')
-print('     <th>ToolTipStyle</th>')
-print('     <th>Icon</th>')
-print(' </tr>')
-print('</thead>')
-print('<tbody> ')
 
-for item in changed:
-    print(" <tr>")
-    print("  <td>")
-    print("   %s" % item)
-    print("  </td>")
-    
-    print("  <td>")
-    print("   %s" % changed[item][5])
-    print("  </td>")
-    
-    print("  <td>")
-    print("   %s" % changed[item][0])
-    print("  </td>")
-    
-    print("  <td>")
-    print("   %s" % changed[item][1])
-    print("  </td>")
-    
-    print("  <td>")
-    print("   %s" % changed[item][3])
-    print("  </td>")
-    
-    print("  <td>")
-    print("   %s" % changed[item][4])
-    print("  </td>")
-    
-    print("  <td>")
-    if changed[item][2] !="":
-        print("   <img src=\"https://bungie.net%s\">" % changed[item][2])
-    print("  </td>")
-    
-    print(" </tr>")
-    
-print('     </tbody>')
-print('</table>')
-
-print('<h1>Removed Stuff</h1>')
-print('<table class="table table-bordered table-striped sortable">')
-print('<thead>')
-print(' <tr>')
-print('     <th>Hash</th>')
-print('     <th>Table</th>')
-print('     <th>Name</th>')
-print('     <th>Description</th>')
-print('     <th>Type</th>')
-print('     <th>ToolTipStyle</th>')
-print('     <th>Icon</th>')
-print(' </tr>')
-print('</thead>')
-print('<tbody> ')
-
-for item in removed_items:
-    print(" <tr>")
-    print("  <td>")
-    print("   %s" % item)
-    print("  </td>")
-    
-    print("  <td>")
-    print("   %s" % removed_items[item][7])
-    print("  </td>")
-    
-    print("  <td>")
-    print("   %s" % removed_items[item][0])
-    print("  </td>")
-    
-    print("  <td>")
-    print("   %s" % removed_items[item][1])
-    print("  </td>")
-    
-    print("  <td>")
-    print("   %s" % removed_items[item][3])
-    print("  </td>")
-    
-    print("  <td>")
-    print("   %s" % removed_items[item][4])
-    print("  </td>")
-    
-    print("  <td>")
-    if removed_items[item][2] !="":
-        print("   <img src=\"https://bungie.net%s\">" % removed_items[item][2])
-    print("  </td>")
-    
-    print(" </tr>")
-    
-print('     </tbody>')
-print('</table>')
-
-print('')
-print('<!-- jQuery (necessary for Bootstrap\'s JavaScript plugins) -->')
-print('    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>')
-print('    <!-- Include all compiled plugins (below), or include individual files as needed -->')
-print('    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>')
-print('    <script src="https://drvic10k.github.io/bootstrap-sortable/Scripts/bootstrap-sortable.js"></script>')
-print('')
-print('')
-print('')
-print('</body>')
-print('</html>')
+</body>
+</html>
